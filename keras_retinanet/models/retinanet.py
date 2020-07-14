@@ -58,14 +58,14 @@ def default_classification_model(
             filters=classification_feature_size,
             activation='relu',
             name='pyramid_classification_{}'.format(i),
-            kernel_initializer=tf.compat.v1.keras.initializers.normal(mean=0.0, stddev=0.01, seed=None),
+            kernel_initializer='random_normal',
             bias_initializer='zeros',
             **options
         )(outputs)
 
     outputs = keras.layers.Conv2D(
         filters=num_classes * num_anchors,
-        kernel_initializer=tf.compat.v1.keras.initializers.normal(mean=0.0, stddev=0.01, seed=None),
+        kernel_initializer='random_normal',
         bias_initializer=initializers.PriorProbability(probability=prior_probability),
         name='pyramid_classification',
         **options
