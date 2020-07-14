@@ -109,7 +109,7 @@ class Generator(keras.utils.Sequence):
     def has_label(self, label):
         """ Returns True if label is a known label.
         """
-        raise NotImplementedError('has_label method not implemented')
+        return True
 
     def has_name(self, name):
         """ Returns True if name is a known class.
