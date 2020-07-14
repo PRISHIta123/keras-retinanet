@@ -61,7 +61,7 @@ def default_classification_model(
             kernel_initializer=tf.compat.v1.keras.initializers.normal(mean=0.0, stddev=0.01, seed=None),
             bias_initializer='zeros',
             **options
-        )(lambda: outputs)
+        )(outputs)
 
     outputs = keras.layers.Conv2D(
         filters=num_classes * num_anchors,
@@ -69,13 +69,13 @@ def default_classification_model(
         bias_initializer=initializers.PriorProbability(probability=prior_probability),
         name='pyramid_classification',
         **options
-    )(lambda: outputs)
+    )(outputs)
 
     # reshape output and apply sigmoid
     if keras.backend.image_data_format() == 'channels_first':
-        outputs = keras.layers.Permute((2, 3, 1), name='pyramid_classification_permute')(lambda: outputs)
-    outputs = keras.layers.Reshape((-1, num_classes), name='pyramid_classification_reshape')(lambda: outputs)
-    outputs = keras.layers.Activation('sigmoid', name='pyramid_classification_sigmoid')(lambda: outputs)
+        outputs = keras.layers.Permute((2, 3, 1), name='pyramid_classification_permute')(outputs)
+    outputs = keras.layers.Reshape((-1, num_classes), name='pyramid_classification_reshape')(outputs)
+    outputs = keras.layers.Activation('sigmoid', name='pyramid_classification_sigmoid')(outputs)
 
     return keras.models.Model(inputs=inputs, outputs=outputs, name=name)
 
